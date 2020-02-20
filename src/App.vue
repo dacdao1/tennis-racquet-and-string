@@ -2,10 +2,11 @@
 <div id="App">
 
     <b-form-input type="text" v-model="userInput" v-on:keyup.enter="getRacquet()"placeholder="Enter racquet name"></b-form-input>
+<ul>
+  <li v-for="racquet in racquets" style="margin-top: 10px">{{racquet}}</li>
 
-  <p>{{userInput}}</p>
-<p>{{result}}</p>
-  <p>{{result1}}</p>
+
+</ul>
 </div>
 </template>
 
@@ -16,7 +17,8 @@ export default {
     return {
       userInput:'',
       result:'',
-      result1: ''
+      result1: '',
+      racquets: {},
     }
   },
   methods: {
@@ -28,6 +30,8 @@ export default {
 
 // This function goal is to return the user input into uppercase for each word
   var upperCaseThis = this.userInput.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+
+
 //Filter the user input to see if they typed in any of the brand name
 
 //Fiter the user input to see if they typed in any of the model name
@@ -45,11 +49,12 @@ export default {
         }
 
   getRacquetName().then(data=>{
-  // const arr1 = data.filter(d=> d.brand === this.userInput)
-  const arr2 = data.filter(d=> d.model === upperCaseThis)
+  const arr3 = data.filter(x => x.model.toLowerCase().includes(this.userInput.toLowerCase()))
 //Pure Drive 2015
 //pure drive 2015
-    this.result = arr2[0].stiffness
+
+    this.racquets = arr3
+    console.log(JSON.stringify(arr3))
 
     // this.result1 = arr1
   }).catch(err=>{console.log(err)})
