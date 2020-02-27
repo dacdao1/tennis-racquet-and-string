@@ -35,6 +35,57 @@ export default {
     getRacquet() {
 
 
+      if (this.userInput.toLowerCase().includes("babolat")) {
+        var modelName = this.userInput.toLowerCase().replace("babolat ", "")
+        var brandName = "Babolat"
+      } else if (this.userInput.toLowerCase().includes("asics")) {
+        var modelName = this.userInput.toLowerCase().replace("asics ", "")
+        var brandName = "Asics"
+      } else if (this.userInput.toLowerCase().includes("donnay")) {
+        var modelName = this.userInput.toLowerCase().replace("donnay ", "")
+        var brandName = "Donnay"
+      } else if (this.userInput.toLowerCase().includes("dunlop")) {
+        var modelName = this.userInput.toLowerCase().replace("dunlop ", "")
+        var brandName = "Dunlop"
+      } else if (this.userInput.toLowerCase().includes("fischer")) {
+        var modelName = this.userInput.toLowerCase().replace("fischer ", "")
+        var brandName = "Fischer"
+      } else if (this.userInput.toLowerCase().includes("gamma")) {
+        var modelName = this.userInput.toLowerCase().replace("gamma ", "")
+        var brandName = "Gamma"
+      } else if (this.userInput.toLowerCase().includes("head")) {
+        var modelName = this.userInput.toLowerCase().replace("head ", "")
+        var brandName = "Head"
+      } else if (this.userInput.toLowerCase().includes("prince")) {
+        var modelName = this.userInput.toLowerCase().replace("prince ", "")
+        var brandName = "Prince"
+      } else if (this.userInput.toLowerCase().includes("pro kennex")) {
+        var modelName = this.userInput.toLowerCase().replace("pro kennex ", "")
+        var brandName = "Pro Kennex"
+      } else if (this.userInput.toLowerCase().includes("slazenger")) {
+        var modelName = this.userInput.toLowerCase().replace("slazenger ", "")
+        var brandName = "Slazenger"
+      } else if (this.userInput.toLowerCase().includes("spalding")) {
+        var modelName = this.userInput.toLowerCase().replace("spalding ", "")
+        var brandName = "Spalding"
+      } else if (this.userInput.toLowerCase().includes("tecnifibre")) {
+        var modelName = this.userInput.toLowerCase().replace("tecnifibre ", "")
+        var brandName = "Tecnifibre"
+      } else if (this.userInput.toLowerCase().includes("vokl")) {
+        var modelName = this.userInput.toLowerCase().replace("vokl ", "")
+        var brandName = "Vokl"
+      } else if (this.userInput.toLowerCase().includes("weed")) {
+        var modelName = this.userInput.toLowerCase().replace("weed ", "")
+        var brandName = "Weed"
+      } else if (this.userInput.toLowerCase().includes("wilson")) {
+        var modelName = this.userInput.toLowerCase().replace("wilson ", "")
+        var brandName = "Wilson"
+      } else if (this.userInput.toLowerCase().includes("yonex")) {
+        var modelName = this.userInput.toLowerCase().replace("yonex ", "")
+        var brandName = "Yonex"
+      } else {
+        console.log(this.userInput)
+      }
 
 
       //Filter the user input to see if they typed in any of the brand name
@@ -43,9 +94,9 @@ export default {
 
 
       //calling the api of racketlogger for all of the racquet and also string
-      function getRacquetName() {
+      function getRacquetName(brandName) {
         return new Promise((resolve, reject) => {
-          fetch("https://api.racketlogger.com/rackets/", {
+          fetch("https://racquet-stringing-52165.firebaseio.com/" + brandName + ".json", {
             headers: {
               "User-Agent": "Awesome-Tennis-App"
             }
@@ -59,30 +110,35 @@ export default {
         })
       }
 
-      getRacquetName().then(data => {
-        const arr3 = data.filter(x => x.model.toLowerCase().match(this.userInput.toLowerCase()))
+      getRacquetName(brandName).then(data => {
 
-        var brandName = arr3[0].brand.toLowerCase()
-        switch (brandName) {
-          case "babolat":
-            this.brandImage = require('./assets/Babolat.jpg')
-            break;
-          case "head":
-            this.brandImage = require('./assets/Head.jpg')
-            break;
-          case "prince":
-            this.brandImage = require('./assets/prince.png')
-            break;
-          case "wilson":
-            this.brandImage = require('./assets/wilson.png')
-            break;
-          case "yonex":
-            this.brandImage = require('./assets/yonex.png')
-            break;
-          default:
-            this.brandImage = ''
-        }
+
+
+        const arr3 = data.filter(x => x["Racquet Name"].toLowerCase().includes(modelName.toLowerCase()))
+        console.log(arr3)
         this.racquets = arr3
+        //
+        // var brandName = arr3[0].brand.toLowerCase()
+        // switch (brandName) {
+        //   case "babolat":
+        //     this.brandImage = require('./assets/Babolat.jpg')
+        //     break;
+        //   case "head":
+        //     this.brandImage = require('./assets/Head.jpg')
+        //     break;
+        //   case "prince":
+        //     this.brandImage = require('./assets/prince.png')
+        //     break;
+        //   case "wilson":
+        //     this.brandImage = require('./assets/wilson.png')
+        //     break;
+        //   case "yonex":
+        //     this.brandImage = require('./assets/yonex.png')
+        //     break;
+        //   default:
+        //     this.brandImage = ''
+        // }
+        // this.racquets = arr3
 
 
 
